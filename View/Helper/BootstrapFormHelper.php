@@ -13,9 +13,23 @@ class BootstrapFormHelper extends FormHelper {
 			'label' => array('class' => 'control-label'),
 			'between' => '<div class="controls">',
 			'after' => '</div>',
+			'format' => array('before', 'label', 'between', 'input', 'error', 'after')
 		);
 		$options = Set::merge($defaults, $options);
 
 		return parent::input($fieldName, $options);
+	}
+
+/**
+ * Adds the class `help-inline` as its required by bootstrap
+ *
+ */
+	public function error($field, $text, $options = array()) {
+		$defaults = array(
+			'class' => 'help-inline'
+		);
+		$options = Set::merge($defaults, $options);
+
+		return parent::error($field, $text, $options);
 	}
 }
