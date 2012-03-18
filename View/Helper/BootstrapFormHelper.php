@@ -4,6 +4,23 @@ App::uses('FormHelper', 'View/Helper');
 class BootstrapFormHelper extends FormHelper {
 
 /**
+ * Adds the class `form-horizontal` as its required by bootstrap
+ *
+ */
+	public function create($model = null, $options = array()) {
+		if (is_array($model) && empty($options)) {
+			$options = $model;
+			$model = null;
+		}
+		$defaults = array(
+			'class' => 'form-horizontal',
+		);
+		$options = Set::merge($defaults, $options);
+
+		return parent::create($model, $options);
+	}
+
+/**
  * Add divs and classes necessary for bootstrap
  *
  */
