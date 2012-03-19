@@ -12,23 +12,29 @@ class BootstrapFormHelper extends FormHelper {
 			$options = $model;
 			$model = null;
 		}
-		$inputDefaults = array(
+		$defaults = array(
+			'class' => 'form-horizontal',
+		);
+		$options = Set::merge($defaults, $options);
+
+		return parent::create($model, $options);
+	}
+
+/**
+ * Add divs and classes necessary for bootstrap
+ *
+ */
+	public function input($fieldName, $options = array()) {
+		$defaults = array(
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label'),
 			'between' => '<div class="controls">',
 			'after' => '</div>',
 			'format' => array('before', 'label', 'between', 'input', 'error', 'after')
 		);
-		if (!empty($options['inputDefaults'])) {
-			$inputDefaults = Set::merge($inputDefaults, $options['inputDefaults']);	
-		}
-		$defaults = array(
-			'class' => 'form-horizontal',
-			'inputDefaults' => $inputDefaults
-		);
 		$options = Set::merge($defaults, $options);
 
-		return parent::create($model, $options);
+		return parent::input($fieldName, $options);
 	}
 
 /**
@@ -42,5 +48,26 @@ class BootstrapFormHelper extends FormHelper {
 		$options = Set::merge($defaults, $options);
 
 		return parent::error($field, $text, $options);
+	}
+
+/**
+ * Add divs and classes necessary for bootstrap
+ *
+ */
+	public function end($options = null) {
+		if ($options !== null) {
+			if (!is_array($options)) {
+				$options = array('label' => $options);
+			}
+			$defaults = array(
+				'class' => 'btn btn-primary',
+				'div' => array(
+					'class' => 'form-actions'
+				)
+			);
+			$options = Set::merge($defaults, $options);
+		}
+
+		return parent::end($options);
 	}
 }
