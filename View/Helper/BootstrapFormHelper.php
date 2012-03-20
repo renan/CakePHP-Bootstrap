@@ -32,6 +32,9 @@ class BootstrapFormHelper extends FormHelper {
 			'after' => '</div>',
 			'format' => array('before', 'label', 'between', 'input', 'error', 'after')
 		);
+		if (isset($options['div']) && $options['div'] === false) {
+			unset($defaults['between'], $defaults['after']);
+		}
 		$options = Set::merge($defaults, $options);
 
 		if (isset($options['label']) && is_string($options['label'])) {
