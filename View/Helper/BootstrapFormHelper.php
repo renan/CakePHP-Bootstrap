@@ -32,6 +32,34 @@ class BootstrapFormHelper extends FormHelper {
 			'after' => '</div>',
 			'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
 		);
+
+		// Convenience params for bootstrap addons (http://twitter.github.com/bootstrap/base-css.html#forms)
+		$prepend = isset($options['bootstrap-prepend']) && is_string($options['bootstrap-prepend']) ? " input-prepend" : "";
+		$append  = isset($options['bootstrap-append'])  && is_string($options['bootstrap-append'])  ? " input-append"  : "";
+		if ($prepend || $append) {
+			if (!isset($options['between'])) {
+				$options['between'] = '';
+			}
+			if (!isset($options['after'])) {
+				$options['after'] = '';
+			}
+
+			$options['between'] .= '<div class="' . $prepend . $append . '">';
+
+			if ($prepend) {
+				$options['between'] .= '<span class="add-on">' . $options['bootstrap-prepend'] .  '</span>';
+			}
+
+			if ($append) {
+				$options['after'] .= '<span class="add-on">' . $options['bootstrap-append'] .  '</span>';
+			}
+
+			$options['after'] .= '</div>';
+
+			unset($options['bootstrap-prepend']);
+			unset($options['bootstrap-append']);
+		}
+
 		if (isset($options['div']) && $options['div'] === false) {
 			unset($defaults['between'], $defaults['after']);
 		}
