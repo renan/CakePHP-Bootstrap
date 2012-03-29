@@ -30,7 +30,7 @@ class BootstrapFormHelper extends FormHelper {
 			'label' => array('class' => 'control-label'),
 			'between' => '<div class="controls">',
 			'after' => '</div>',
-			'format' => array('before', 'label', 'between', 'input', 'error', 'after')
+			'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
 		);
 		if (isset($options['div']) && $options['div'] === false) {
 			unset($defaults['between'], $defaults['after']);
@@ -53,7 +53,7 @@ class BootstrapFormHelper extends FormHelper {
  */
 	public function error($field, $text, $options = array()) {
 		$defaults = array(
-			'class' => 'help-inline'
+			'class' => 'help-inline',
 		);
 		$options = Set::merge($defaults, $options);
 
@@ -72,8 +72,8 @@ class BootstrapFormHelper extends FormHelper {
 			$defaults = array(
 				'class' => 'btn btn-primary',
 				'div' => array(
-					'class' => 'form-actions'
-				)
+					'class' => 'form-actions',
+				),
 			);
 			$options = Set::merge($defaults, $options);
 		}
