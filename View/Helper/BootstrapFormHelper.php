@@ -24,19 +24,27 @@ class BootstrapFormHelper extends FormHelper {
  * Add divs and classes necessary for bootstrap
  *
  */
-	public function input($fieldName, $options = array()) {
+	public function input($fieldName, $params = array()) {
 		$defaults = array(
 			'div' => array('class' => 'control-group'),
 			'label' => array('class' => 'control-label'),
 			'between' => '<div class="controls">',
-			'after' => '</div>',
+			// 'after' => '</div>',
 			'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
 		);
 
-		// Convenience params for bootstrap addons (http://twitter.github.com/bootstrap/base-css.html#forms)
+		if (isset($params['div']) && $params['div'] === false) {
+			unset($defaults['between'], $defaults['after']);
+		}
+
+		$options = Set::merge($defaults, $params);
+
 		$prepend = isset($options['bootstrap-prepend']) && is_string($options['bootstrap-prepend']) ? " input-prepend" : "";
 		$append  = isset($options['bootstrap-append'])  && is_string($options['bootstrap-append'])  ? " input-append"  : "";
 		if ($prepend || $append) {
+			if (!isset($options['before'])) {
+				$options['before'] = '';
+			}
 			if (!isset($options['between'])) {
 				$options['between'] = '';
 			}
@@ -44,7 +52,7 @@ class BootstrapFormHelper extends FormHelper {
 				$options['after'] = '';
 			}
 
-			$options['between'] .= '<div class="' . $prepend . $append . '">';
+			$options['before'] .= '<div class="' . trim($prepend . $append) . '">';
 
 			if ($prepend) {
 				$options['between'] .= '<span class="add-on">' . $options['bootstrap-prepend'] .  '</span>';
@@ -60,14 +68,10 @@ class BootstrapFormHelper extends FormHelper {
 			unset($options['bootstrap-append']);
 		}
 
-		if (isset($options['div']) && $options['div'] === false) {
-			unset($defaults['between'], $defaults['after']);
+		if (!isset($options['after'])) {
+			$options['after'] = '';
 		}
-		if (isset($options['after']) && is_string($options['after'])) {
-			$options['after'] .= '</div>';
-		}
-
-		$options = Set::merge($defaults, $options);
+		$options['after'] .= '</div>';
 
 		if (isset($options['label']) && is_string($options['label'])) {
 			$options['label'] = array(
@@ -75,6 +79,10 @@ class BootstrapFormHelper extends FormHelper {
 				'text' => $options['label'],
 			);
 		}
+
+		// if ($append) {
+		// 	prd(compact('fieldName', 'options', 'params', 'default'));
+		// }
 
 		return parent::input($fieldName, $options);
 	}
