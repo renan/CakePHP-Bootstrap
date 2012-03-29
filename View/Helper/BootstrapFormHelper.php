@@ -37,6 +37,10 @@ class BootstrapFormHelper extends FormHelper {
 		}
 		$options = Set::merge($defaults, $options);
 
+		if (isset($options['after']) && is_string($options['after'])) {
+			$options['after'] .= '</div>';
+		}
+
 		if (isset($options['label']) && is_string($options['label'])) {
 			$options['label'] = array(
 				'class' => 'control-label',
