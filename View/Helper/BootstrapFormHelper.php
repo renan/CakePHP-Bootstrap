@@ -33,10 +33,6 @@ class BootstrapFormHelper extends FormHelper {
 			'format' => array('before', 'label', 'between', 'input', 'error', 'after'),
 		);
 
-		if (isset($params['div']) && $params['div'] === false) {
-			unset($defaults['between'], $defaults['after']);
-		}
-
 		$options = Set::merge($defaults, $params);
 
 		$prepend = isset($options['bootstrap-prepend']) && is_string($options['bootstrap-prepend']) ? " input-prepend" : "";
@@ -79,6 +75,10 @@ class BootstrapFormHelper extends FormHelper {
 				'text' => $options['label'],
 			);
 		}
+
+		if (isset($options['div']) && $options['div'] === false) {
+			unset($options['between'], $options['after']);
+		}		
 
 		// if ($append) {
 		// 	prd(compact('fieldName', 'options', 'params', 'default'));
