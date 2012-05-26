@@ -91,7 +91,7 @@ class BootstrapFormHelper extends FormHelper {
  * Adds the class `help-inline` as its required by bootstrap
  *
  */
-	public function error($field, $text, $options = array()) {
+	public function error($field, $text = null, $options = array()) {
 		$defaults = array(
 			'class' => 'help-inline',
 		);
